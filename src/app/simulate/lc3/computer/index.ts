@@ -77,6 +77,7 @@ export class LittleComputer3 {
     loadProgram(program: LC3Program) {
         this.program = program;
         this.registers.PC = program.startAddress;
+        this.memory.clear();
         this.memory.load(program.program, program.startAddress);
         program.symbolTable.forEach((value, key) =>
             this.symbolTable.set(key, value)

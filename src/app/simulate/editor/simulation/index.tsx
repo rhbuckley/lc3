@@ -5,10 +5,18 @@ import dynamic from "next/dynamic";
 import { InputBuffer } from "./buffers/InputBuffer";
 import { OutputBuffer } from "./buffers/OutputBuffer";
 import { MemoryWatcher } from "./memory";
+import { $lc3 } from "../../lc3/@react";
+import { compile_asm } from "../../lc3/compiler/core";
 
-interface SimulationProps {}
+interface SimulationProps {
+    initialCode?: string;
+}
 
-function SimulationView({}: SimulationProps) {
+function SimulationView({ initialCode }: SimulationProps) {
+    $lc3.get().loadProgram(
+        compile_asm(initialCode?.split("\n") || [".ORIG x3000", "HALT", ".END"])
+    );
+
     return (
         <div className="p-4 bg-black bg-opacity-40 backdrop-blur-sm filter w-full h-full border-t-4 border-gray-200/50 overflow-y-scroll">
             <Content>

@@ -12,12 +12,48 @@ import {
 } from "~/components/Resizable";
 import { EditorActions } from "./editoractions";
 
-const EDITORDEFAULT = `.ORIG x3000
-LEA R0 mylabel
-PUTS
-HALT
-mylabel: .STRINGZ "i (definitely) love physics"
-.END`;
+const EDITORDEFAULT = `; LC3 Tools
+; -----------------------------
+; This project hopes to make
+; lives easier when working in
+; the LC3 Assembly language.
+
+.ORIG x3000
+
+LEA R0 mylabel ; load addr of mylabel
+PUTS           ; display r0
+HALT           ; halt the program
+
+mylabel: .STRINGZ "welcome to lc3!"
+
+.END
+
+; Some extra notes
+; -------------------------------
+; Powered by the same editor as VS Code
+;
+; The IDE is very opinionated
+; (my opinions, sorry).
+;   "mylabel:" is styled as a label
+;   "mylabel" would not be
+; the compiler does recognize either
+; way.
+;
+; Unlike some other online compilers,
+; this is very recent (March 2024),
+; and as much as I would like to say
+; that this is perfect, the possibility
+; for bugs does exist. If found, please
+; reach out to me at rhbuckley@uri.edu
+; or create a pull request at the repo
+; at https://github.com/rhbuckley/lc3
+;
+; When you press "compile", an error
+; message may display next to the button
+; or your message will be loaded into
+; the simulator. To see your raw code,
+; simply open the inspect element console.
+`;
 
 interface EditorProps {}
 
@@ -78,7 +114,7 @@ export default function LC3Editor({}: EditorProps) {
 
                 {/* Simulation Options */}
                 <ResizablePanel defaultSize={40}>
-                    <Simulation />
+                    <Simulation initialCode={EDITORDEFAULT} />
                 </ResizablePanel>
             </ResizablePanelGroup>
         </div>

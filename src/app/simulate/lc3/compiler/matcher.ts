@@ -13,9 +13,12 @@ export interface TokenizedInstruction {
  * @param instruction {string}
  * @returns
  */
-export function tokenizeInstruction(instruction: string): TokenizedInstruction {
+export function tokenizeInstruction(
+    instruction: string
+): TokenizedInstruction | undefined {
     // - Split off all comments and trim the instruction
-    instruction = instruction.split(/(?!\B"[^"]*);(?![^"]*"\B)/)[0].trim();
+    instruction = stripComments(instruction);
+    if (instruction === "") return;
 
     // - Check if the instruction has a string. I
     // do this now because I do not want to tokenize
@@ -80,6 +83,22 @@ export function tokenizeInstruction(instruction: string): TokenizedInstruction {
         ...keyword,
         tokens: tokenize(instruction),
     };
+}
+
+function stripComments(instruction: string): string {
+    // Is the semicolon in a string?
+    let inString = false;
+    let foundSemi = -1;
+    let i = 0;
+
+    while (i < instruction.length && foundSemi === -1) {
+        if (instruction[i] === '"') inString = !inString;
+        if (instruction[i] === ";" && !inString) foundSemi = i;
+        i++;
+    }
+
+    if (foundSemi === -1) return instruction;
+    return instruction.slice(0, foundSemi);
 }
 
 function tokenize(instruction: string): string[] {

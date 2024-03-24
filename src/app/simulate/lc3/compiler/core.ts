@@ -53,6 +53,7 @@ const Instructions = {
 function handleLine(line: string, manager: ASMManager) {
     // 0 will always be the opcode
     const instruction = tokenizeInstruction(line);
+    if (!instruction) return;
 
     if (instruction.label)
         manager.addLabel(
