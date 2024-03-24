@@ -71,7 +71,7 @@ export default function LC3Editor({}: EditorProps) {
 
     return (
         <div className="h-screen flex flex-col bg-[#1e1e1e] relative sm:fixed right-0 sm:w-[48vw]">
-            <div className="px-5 pt-4 pb-2">
+            <div className="px-5 pt-4 pb-8">
                 <Content className="text-white">
                     <p className="font-monsterrat text-2xl">
                         <strong>LC3</strong> Code Editor
@@ -97,13 +97,12 @@ export default function LC3Editor({}: EditorProps) {
                         defaultLanguage={LC3LanguageID}
                         defaultValue={EDITORDEFAULT}
                         theme="vs-dark"
-                        className="z-10"
                         options={{
                             minimap: { enabled: false },
                             wordWrap: "on",
                             scrollBeyondLastLine: false,
                             automaticLayout: true,
-                            padding: { top: 16 },
+                            fixedOverflowWidgets: true,
                         }}
                         beforeMount={handleEditorWillMount}
                         onMount={handleEditorDidMount}
